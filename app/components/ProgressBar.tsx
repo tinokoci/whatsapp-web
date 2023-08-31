@@ -14,7 +14,6 @@ const ProgressBar = ({ index, activeIndex }: Props) => {
     const id = setInterval(
       () => {
         setProgress((prev) => {
-          console.log(index + ": " + prev);
           if (prev < 100) return prev + 1;
           clearInterval(id);
           return prev;

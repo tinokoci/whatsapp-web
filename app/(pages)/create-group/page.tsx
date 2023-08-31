@@ -6,9 +6,9 @@ import Link from "next/link";
 import Image from "next/image";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Layout from "@/components/layout/Layout";
+import FallbackWindow from "@/components/modules/FallbackWindow";
 import SelectedMember from "@/components/SelectedMember";
 import ChatCard from "@/components/ChatCard";
-import WelcomeCard from "@/components/WelcomeCard";
 import type { CreateGroupState } from "@/utils/types";
 import { BsArrowLeft, BsArrowRight, BsCheck2, BsPencil } from "react-icons/bs";
 import { Button } from "@mui/material";
@@ -135,7 +135,7 @@ const CreateGroup: NextPage = () => {
             </>
           )}
         </div>
-        <WelcomeCard />
+        <FallbackWindow />
       </Layout>
     </ProtectedRoute>
   );

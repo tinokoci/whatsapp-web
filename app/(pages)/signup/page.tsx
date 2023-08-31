@@ -90,6 +90,7 @@ const SignUp: NextPage = () => {
               <div className="mb-2">Password:</div>
               <input
                 type="password"
+                autoComplete="on"
                 placeholder={"Enter your password"}
                 value={formData.password}
                 onChange={(event) =>

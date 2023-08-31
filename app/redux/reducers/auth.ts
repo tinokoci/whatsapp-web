@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AuthResponseData, AuthState } from "@/utils/types";
 
 const initialState: AuthState = {
+  id: "",
   jwt: null,
   username: null,
 };
@@ -13,6 +14,7 @@ const authSlice = createSlice({
     auth: (state, action: PayloadAction<AuthResponseData>) => {
       state.jwt = action.payload.jwt;
       state.username = action.payload.username;
+      state.id = action.payload.id;
     },
     logout: (state) => {
       state.jwt = null;

@@ -7,8 +7,8 @@ import Image from "next/image";
 import { useAppSelector } from "@/redux/hooks";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import Layout from "@/components/layout/Layout";
-import WelcomeCard from "@/components/WelcomeCard";
 import { BsArrowLeft, BsCheck2, BsPencil } from "react-icons/bs";
+import FallbackWindow from "@/components/modules/FallbackWindow";
 
 const Profile: NextPage = () => {
   const usernameFromRedux = useAppSelector(
@@ -77,7 +77,7 @@ const Profile: NextPage = () => {
             )}
           </div>
         </div>
-        <WelcomeCard />
+        <FallbackWindow />
       </Layout>
     </ProtectedRoute>
   );

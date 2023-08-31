@@ -56,7 +56,7 @@ const Login: NextPage = () => {
                 onChange={(event) =>
                   updateFormDataField({ username: event.target.value })
                 }
-                className="w-full rounded-md border py-2 outline outline-green-600"
+                className="w-full rounded-md border py-2 pl-2 outline outline-green-600"
               />
             </div>
             {/* Password Input */}
@@ -64,12 +64,13 @@ const Login: NextPage = () => {
               <div className="mb-2">Password:</div>
               <input
                 type="password"
+                autoComplete="on"
                 placeholder={"Enter your password"}
                 value={formData.password}
                 onChange={(event) =>
                   updateFormDataField({ password: event.target.value })
                 }
-                className="w-full rounded-md border py-2 outline outline-green-600"
+                className="w-full rounded-md border py-2 pl-2 outline outline-green-600"
               />
             </div>
             <button

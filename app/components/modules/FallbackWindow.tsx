@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const WelcomeCard = () => (
+const FallbackWindow = () => (
   <div className="f-full flex w-[70%] flex-col items-center justify-center">
     <div className="flex flex-col items-center justify-center">
       <Image src={"/home.svg"} alt="background" width={360} height={204} />
@@ -13,4 +13,4 @@ const WelcomeCard = () => (
   </div>
 );
 
-export default WelcomeCard;
+export default FallbackWindow;
