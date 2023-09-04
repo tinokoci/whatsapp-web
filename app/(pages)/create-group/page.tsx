@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
-import Layout from "@/components/layout/Layout";
+import PageWrapper from "@/components/layout/PageWrapper";
 import FallbackWindow from "@/components/modules/FallbackWindow";
 import SelectedMember from "@/components/SelectedMember";
 import ChatCard from "@/components/ChatCard";
@@ -30,7 +30,7 @@ const CreateGroup: NextPage = () => {
 
   return (
     <ProtectedRoute type="PROTECTED">
-      <Layout>
+      <PageWrapper>
         <div className="h-full w-[30%] bg-[#E8E9EC]">
           {/* Back */}
           <Link
@@ -136,7 +136,7 @@ const CreateGroup: NextPage = () => {
           )}
         </div>
         <FallbackWindow />
-      </Layout>
+      </PageWrapper>
     </ProtectedRoute>
   );
 };

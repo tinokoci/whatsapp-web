@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAppDispatch } from "@/redux/hooks";
 import { auth } from "@/redux/reducers/auth";
-import { signUp } from "@/utils/requests";
+import { signUp } from "@/utils/clientRequests";
 import { AuthRequestData } from "@/utils/types";
 import type { FormEvent } from "react";
 

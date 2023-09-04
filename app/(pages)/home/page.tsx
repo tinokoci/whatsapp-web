@@ -4,14 +4,14 @@ import Layout from "@/components/layout/Layout";
 import LeftPanel from "@/components/layout/LeftPanel";
 import RightPanel from "@/components/layout/RightPanel";
 import FallbackWindow from "@/components/modules/FallbackWindow";
-import ProfileManager from "./ProfileManager";
+import UserMenu from "@/components/modules/UserMenu";
 
-const Profile: NextPage = () => {
+const Home: NextPage = () => {
   return (
     <ProtectedRoute>
       <Layout>
         <LeftPanel>
-          <ProfileManager />
+          <UserMenu />
         </LeftPanel>
         <RightPanel>
           <FallbackWindow />
@@ -21,4 +21,4 @@ const Profile: NextPage = () => {
   );
 };
 
-export default Profile;
+export default Home;

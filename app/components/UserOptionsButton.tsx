@@ -6,16 +6,12 @@ import LogoutButton from "@/components/LogoutButton";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Menu, MenuItem } from "@mui/material";
 
-const UserMenu = () => {
+const UserOptionsButton = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClose = () => setAnchorEl(null);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) =>
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   return (
     <>
       <BsThreeDotsVertical
@@ -47,4 +43,4 @@ const UserMenu = () => {
   );
 };
 
-export default UserMenu;
+export default UserOptionsButton;

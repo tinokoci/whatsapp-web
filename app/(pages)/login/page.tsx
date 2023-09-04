@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAppDispatch } from "@/redux/hooks";
 import { auth } from "@/redux/reducers/auth";
-import { login } from "@/utils/requests";
+import { login } from "@/utils/clientRequests";
 import { AuthRequestData } from "@/utils/types";
+import { postLogin } from "@/utils/helpers";
 
 const Login: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -32,12 +33,11 @@ const Login: NextPage = () => {
     formData: AuthRequestData,
   ) => {
     event.preventDefault();
-    const data = await login(formData);
-    if (data == null) return;
-
-    dispatch(auth(data));
+    const user = await login(formData);
+    if (user == null) return;
+    dispatch(auth(user));
+    await postLogin(dispatch);
   };
-
   return (
     <ProtectedRoute type="AUTH_ROUTE">
       <div className="flex h-full w-full items-center justify-center">

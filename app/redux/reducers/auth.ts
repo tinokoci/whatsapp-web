@@ -1,27 +1,41 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AuthResponseData, AuthState } from "@/utils/types";
+import { AuthState, User } from "@/utils/types";
 
 const initialState: AuthState = {
-  id: "",
-  jwt: null,
-  username: null,
+  user: null,
+  firstPageRender: true,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    auth: (state, action: PayloadAction<AuthResponseData>) => {
-      state.jwt = action.payload.jwt;
-      state.username = action.payload.username;
-      state.id = action.payload.id;
+    auth: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
     },
     logout: (state) => {
-      state.jwt = null;
+      state.user = null;
+    },
+    acknowledgeFirstPageRender: (state) => {
+      state.firstPageRender = false;
+    },
+    setUsername: (state, action: PayloadAction<string>) => {
+      const user = state.user as User;
+      user.username = action.payload;
+    },
+    setAvatar: (state, action: PayloadAction<string>) => {
+      const user = state.user as User;
+      user.avatar = action.payload;
     },
   },
 });
 
 export const authReducer = authSlice.reducer;
 
-export const { auth, logout } = authSlice.actions;
+export const {
+  auth,
+  logout,
+  acknowledgeFirstPageRender,
+  setUsername,
+  setAvatar,
+} = authSlice.actions;

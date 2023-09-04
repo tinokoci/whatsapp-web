@@ -1,10 +1,14 @@
 export type ProtectedRouteType = "PROTECTED" | "UNPROTECTED" | "AUTH_ROUTE";
 
-export type HttpRequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type HttpRequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type MessageType = "SENT" | "RECEIVED";
 
 export type CreateGroupState = "ADD_MEMBERS" | "EDIT_DISPLAY";
+
+export type ChatType = "DIRECT" | "GROUP";
+
+export type RedirectType = "PUSH" | "REPLACE";
 
 export interface HttpRequest {
   path: string;
@@ -20,27 +24,16 @@ export interface AuthRequestData {
   fullName?: string;
 }
 
-export interface AuthResponseData {
-  jwt: string;
-  username: string;
-  id: string;
-}
-
 export interface AuthState {
-  id: string;
-  jwt: string | null;
-  username: string | null;
+  user: User | null;
+  firstPageRender: boolean;
 }
 
 export interface ChatSearchState {
-  activeEntityId: string;
-  users: User[];
-}
-
-export interface Chat {
-  id: string;
-  name: string;
-  avatar: string;
+  openedChatId: string;
+  openedChatUserId?: string | null;
+  userChatPreviews: DirectChat[];
+  searchChatPreviews: DirectChat[];
 }
 
 export interface ChatCreateDirectRequest {
@@ -60,9 +53,19 @@ export interface User {
   avatar: string;
 }
 
-export interface MessageSendRequest {
-  entityId: string; // can be either Chat (for groups) or User (for DMs) id
-  text: string;
+// Request Response DTOs (data transfer objects)
+
+export interface Chat {
+  chatId: string;
+  name: string;
+  avatar: string;
+  latestMessageText: string;
+}
+
+export interface GroupChat extends Chat {}
+
+export interface DirectChat extends GroupChat {
+  recipientId: string;
 }
 
 export interface Message {
@@ -70,4 +73,15 @@ export interface Message {
   text: string;
   timestamp: number;
   failedToSend?: boolean;
+}
+
+export interface MessageSendRequest {
+  chatId: string;
+  text: string;
+}
+
+export interface UserUpdateRequest {
+  username?: string;
+  fullName?: string;
+  avatar?: string;
 }

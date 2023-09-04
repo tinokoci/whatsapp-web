@@ -1,20 +1,20 @@
+import Link from "next/link";
 import Image from "next/image";
-import { User } from "@/utils/types";
+import { DirectChat } from "@/utils/types";
 
 interface Props {
-  user: User;
-  onClick?: () => void;
+  chatPreview: DirectChat;
 }
 
-const ChatCard = ({ user, onClick = () => {} }: Props) => (
-  <div
-    onClick={onClick}
-    className="flex cursor-pointer items-center justify-between px-3 py-2"
+const ChatCard = ({ chatPreview }: Props) => (
+  <Link
+    href={`/direct/${chatPreview.recipientId}`}
+    className="flex cursor-pointer items-center justify-between border-t  py-3 "
   >
     <div className="flex gap-4">
       <Image
         src={
-          user.avatar ||
+          chatPreview.avatar ||
           `https://live.staticflickr.com/2413/2494908876_e196f3ea40_b.jpg`
         }
         alt="avatar"
@@ -23,8 +23,10 @@ const ChatCard = ({ user, onClick = () => {} }: Props) => (
         className="h-14 w-14 rounded-full"
       ></Image>
       <div className="flex flex-col justify-between">
-        <div className="text-lg">{user.username}</div>
-        <div>message...</div>
+        <div className="text-lg">{chatPreview.name}</div>
+        <div>
+          {chatPreview.latestMessageText || "Be the first to message! 🎉"}
+        </div>
       </div>
     </div>
     <div>
@@ -37,7 +39,7 @@ const ChatCard = ({ user, onClick = () => {} }: Props) => (
         </div>
       </div>
     </div>
-  </div>
+  </Link>
 );
 
 export default ChatCard;

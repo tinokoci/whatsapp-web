@@ -1,13 +1,20 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { logout } from "@/redux/reducers/auth";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout as logoutAction } from "@/redux/reducers/auth";
+import { logout } from "@/utils/clientRequests";
 
 const LogoutButton = () => {
   const dispatch = useAppDispatch();
-  const username = useAppSelector((store) => store.authReducer.username);
 
-  return <button onClick={() => dispatch(logout())}>Logout</button>;
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      dispatch(logoutAction());
+    }
+  };
+
+  return <button onClick={handleLogout}>Logout</button>;
 };
 
 export default LogoutButton;
