@@ -33,6 +33,7 @@ const Direct: NextPage<Props> = async ({ params }) => {
 
   if (!recipient) {
     redirect("/", "REPLACE", "Failed to fetch recipient");
+    return;
   }
   const messages = await getDirectChatMessages(chat.chatId);
 
@@ -47,10 +48,10 @@ const Direct: NextPage<Props> = async ({ params }) => {
           <UserMenu />
         </LeftPanel>
         <RightPanel>
-          <DirectChatHeader recipient={recipient as User} />
+          <DirectChatHeader recipient={recipient} />
           <DirectChatInteractive
             messages={messages.reverse()}
-            recipient={recipient as User}
+            recipient={recipient}
             chat={chat}
           />
         </RightPanel>

@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
+import { SERVER_URL } from "./constants";
 import { createRequest } from "@/utils/clientRequests";
 import { DirectChat, Message, HttpRequest, User } from "@/utils/types";
 
-const BASE_PRIVATE_URL = "http://localhost:8080/api/v1";
+const BASE_PRIVATE_URL = `${SERVER_URL}/api/v1`;
 
 // CHAT
 

@@ -1,3 +1,4 @@
+import { SERVER_URL } from "./constants";
 import {
   HttpRequest,
   AuthRequestData,
@@ -8,7 +9,7 @@ import {
   UserUpdateRequest,
 } from "@/utils/types";
 
-const BASE_PRIVATE_URL = "http://localhost:8080/api/v1";
+const BASE_PRIVATE_URL = `${SERVER_URL}/api/v1`;
 
 // USERS
 export const getSelfUser = async (): Promise<User | null> => {
