@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ChatSearchState, DirectChat } from "@/utils/types";
+import { ChatSearchState, DirectChat, GroupChat } from "@/utils/types";
 
 const initialState: ChatSearchState = {
   openedChatId: "",
   openedChatUserId: null,
   userChatPreviews: [],
+  userGroupPreviews: [],
   searchChatPreviews: [],
 };
 
@@ -15,6 +16,9 @@ const chatSearchSlice = createSlice({
     setUserChatPreviews: (state, action: PayloadAction<DirectChat[]>) => {
       state.userChatPreviews = action.payload;
     },
+    setUserGroupPreviews: (state, action: PayloadAction<GroupChat[]>) => {
+      state.userGroupPreviews = action.payload;
+    },
     setSearchChatPreviews: (state, action: PayloadAction<DirectChat[]>) => {
       state.searchChatPreviews = action.payload;
     },
@@ -23,5 +27,8 @@ const chatSearchSlice = createSlice({
 
 export const chatReducer = chatSearchSlice.reducer;
 
-export const { setUserChatPreviews, setSearchChatPreviews } =
-  chatSearchSlice.actions;
+export const {
+  setUserChatPreviews,
+  setUserGroupPreviews,
+  setSearchChatPreviews,
+} = chatSearchSlice.actions;

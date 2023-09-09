@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useAppSelector } from "@/redux/hooks";
 import MessageCard from "@/components/MessageCard";
 import { sendMessage } from "@/utils/clientRequests";
 import { SERVER_URL } from "@/utils/constants";
-import { Message, MessageSendRequest, User, DirectChat } from "@/utils/types";
+import { Message, MessageSendRequest, User, Chat } from "@/utils/types";
 import SockJS from "sockjs-client";
 import { Client, over } from "stompjs";
 import { BsEmojiSmile, BsMicFill } from "react-icons/bs";
@@ -12,18 +13,17 @@ import { ImAttachment } from "react-icons/im";
 
 interface Props {
   messages: Message[];
-  recipient: User;
-  chat: DirectChat;
+  chat: Chat;
 }
 
-const DirectChatInteractive = (props: Props) => {
+const ChatInteractive = (props: Props) => {
   const [sockClient, setSockClient] = useState<Client>();
   const [sockClientConnected, setSockClientConnected] = useState(false);
   const [messages, setMessages] = useState(props.messages);
   const [inputText, setInputText] = useState<string>("");
 
   const chat = props.chat;
-  const recipient = props.recipient;
+  const sender = useAppSelector((store) => store.authReducer.user) as User;
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Connect to web socket
@@ -40,6 +40,7 @@ const DirectChatInteractive = (props: Props) => {
       },
       console.log,
     );
+    ``;
   }, []);
 
   // Subsctibe to web socket
@@ -49,7 +50,7 @@ const DirectChatInteractive = (props: Props) => {
       "/chat/" + chat.chatId,
       (response) => {
         const message: Message = JSON.parse(response.body);
-        if (message.senderId !== recipient.id) return; // don't add duplicate message to sender
+        if (message.senderId === sender.id) return; // don't add duplicate message to sender
         setMessages((prev) => [...prev, message]);
       },
     );
@@ -69,7 +70,7 @@ const DirectChatInteractive = (props: Props) => {
     // Push dummy message for instant display on screen
     const index = messages.length;
     messages.push({
-      senderId: index.toString(),
+      senderId: sender.id,
       text: inputText,
       timestamp: new Date().getMilliseconds(),
     });
@@ -100,7 +101,7 @@ const DirectChatInteractive = (props: Props) => {
             <MessageCard
               key={idx}
               text={message.text}
-              type={message.senderId === recipient.id ? "RECEIVED" : "SENT"}
+              type={message.senderId === sender.id ? "SENT" : "RECEIVED"}
             />
           ))}
         </div>
@@ -127,4 +128,4 @@ const DirectChatInteractive = (props: Props) => {
   );
 };
 
-export default DirectChatInteractive;
+export default ChatInteractive;

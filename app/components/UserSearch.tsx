@@ -6,7 +6,7 @@ import { setSearchChatPreviews } from "@/redux/reducers/chat";
 import { searchDirectChatsByUsername } from "@/utils/clientRequests";
 import { BsFilter } from "react-icons/bs";
 
-const UserSearch = () => {
+const UserSearch = ({ placeholderText }: { placeholderText: string }) => {
   const dispatch = useAppDispatch();
 
   const handleSearch = async (value: string) => {
@@ -27,7 +27,7 @@ const UserSearch = () => {
     <div className="flex items-center justify-center bg-white px-3 py-4">
       <input
         type="text"
-        placeholder="Search or start new Chat"
+        placeholder={placeholderText}
         className="w-11/12 rounded-md border-none bg-slate-200 py-2 pl-9 outline-none"
         onChange={(event) => handleSearch(event.target.value)}
       />

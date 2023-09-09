@@ -5,14 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAppSelector, useAppDispatch } from "@/redux/hooks";
 import { setUsername, setAvatar } from "@/redux/reducers/auth";
-import { updateUser, uploadFile } from "@/utils/clientRequests";
+import { getImageLobSrc } from "@/utils/helpers";
+import { updateUser, updateUserAvatar } from "@/utils/clientRequests";
 import { BsArrowLeft, BsCheck2, BsPencil } from "react-icons/bs";
 import { User } from "@/utils/types";
 
 const ProfileManager = () => {
   const [isEditingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState("");
-  const [nameInUseError, setNameInUseError] = useState(false);
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.authReducer.user);
@@ -36,11 +36,12 @@ const ProfileManager = () => {
 
   const uploadAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (!files) return;
-    const file = files[0];
-    const user = (await uploadFile(file)) as User;
-    console.log("got image: " + user.avatar);
-    dispatch(setAvatar(user.avatar));
+    if (!files || files.length == 0) return;
+
+    updateUserAvatar(files[0]).then((user) => {
+      if (user == null) return;
+      dispatch(setAvatar(user.avatar));
+    });
   };
 
   return (
@@ -58,11 +59,7 @@ const ProfileManager = () => {
       <div className="my-12 flex flex-col items-center justify-center">
         <label htmlFor="avatar">
           <Image
-            src={
-              user?.avatar
-                ? `data:image/jpeg;base64,${user.avatar}`
-                : `/avatar.jpg`
-            }
+            src={getImageLobSrc(user?.avatar, "/avatar.jpg")}
             alt="avatar"
             width={208}
             height={208}
@@ -74,6 +71,7 @@ const ProfileManager = () => {
           type="file"
           id="avatar"
           onChange={uploadAvatar}
+          className="hidden"
         />
       </div>
       {/* Name Change */}

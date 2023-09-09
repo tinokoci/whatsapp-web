@@ -6,7 +6,7 @@ const UserMenu = async () => {
   return (
     <>
       <UserTopBar />
-      <UserSearch />
+      <UserSearch placeholderText="Search or start new Chat" />
       <UserChats />
     </>
   );

@@ -32,7 +32,7 @@ const UserOptionsButton = () => {
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <Link href="/create-group">
+        <Link href="/group/create">
           <MenuItem>Create Group</MenuItem>
         </Link>
         <MenuItem>

@@ -1,10 +1,12 @@
+import { StringMappingType } from "typescript";
+
 export type ProtectedRouteType = "PROTECTED" | "UNPROTECTED" | "AUTH_ROUTE";
 
 export type HttpRequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type MessageType = "SENT" | "RECEIVED";
 
-export type CreateGroupState = "ADD_MEMBERS" | "EDIT_DISPLAY";
+export type GroupCreateState = "ADD_MEMBERS" | "EDIT_INFO";
 
 export type ChatType = "DIRECT" | "GROUP";
 
@@ -12,8 +14,9 @@ export type RedirectType = "PUSH" | "REPLACE";
 
 export interface HttpRequest {
   path: string;
-  method?: HttpRequestMethod;
+  method: HttpRequestMethod;
   headers?: { [key: string]: string };
+  contentType?: string;
   body?: any;
 }
 
@@ -33,6 +36,7 @@ export interface ChatSearchState {
   openedChatId: string;
   openedChatUserId?: string | null;
   userChatPreviews: DirectChat[];
+  userGroupPreviews: GroupChat[];
   searchChatPreviews: DirectChat[];
 }
 
@@ -40,10 +44,17 @@ export interface ChatCreateDirectRequest {
   receiverId: string;
 }
 
-export interface ChatCreateGroupRequest {
+export interface Chat {
+  chatId: string;
   name: string;
   avatar: string;
-  participants: string[];
+  latestMessage: Message;
+}
+
+export interface GroupChat extends Chat {}
+
+export interface DirectChat extends GroupChat {
+  recipientId: string;
 }
 
 export interface User {
@@ -51,21 +62,6 @@ export interface User {
   username: string;
   fullName: string;
   avatar: string;
-}
-
-// Request Response DTOs (data transfer objects)
-
-export interface Chat {
-  chatId: string;
-  name: string;
-  avatar: string;
-  latestMessageText: string;
-}
-
-export interface GroupChat extends Chat {}
-
-export interface DirectChat extends GroupChat {
-  recipientId: string;
 }
 
 export interface Message {
@@ -84,4 +80,10 @@ export interface UserUpdateRequest {
   username?: string;
   fullName?: string;
   avatar?: string;
+}
+
+export interface GroupCreateRequest {
+  name: string;
+  avatar?: File;
+  participants: string[];
 }

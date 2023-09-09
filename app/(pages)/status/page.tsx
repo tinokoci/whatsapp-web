@@ -1,39 +1,65 @@
-import { NextPage } from "next";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import ProtectedRoute from "@/components/layout/ProtectedRoute";
-import StatusUserCard from "@/components/StatusUserCard";
+import ProgressBar from "@/components/ProgressBar";
+import { BsArrowLeft } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 
-const Status: NextPage = () => {
+const dummyStories = [
+  "https://images.pexels.com/photos/16141305/pexels-photo-16141305/free-photo-of-view-of-a-white-building.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  "https://images.pexels.com/photos/17761483/pexels-photo-17761483/free-photo-of-view-of-a-cable-car.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  "https://images.pexels.com/photos/16356463/pexels-photo-16356463/free-photo-of-blonde-woman-in-green-skirt-walking-along-pier.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  "https://images.pexels.com/photos/17467015/pexels-photo-17467015/free-photo-of-loungers-on-a-rocky-beach.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  "https://images.pexels.com/photos/17893702/pexels-photo-17893702/free-photo-of-boy-riding-bile-on-country-road.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+  "https://images.pexels.com/photos/18101834/pexels-photo-18101834.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
+];
+
+const StatusViewer = ({ params }: { params: { id: string } }) => {
+  const [currentStoryIndex, setCurrentStoryIndex] = useState<number>(0);
+
+  const handleNextStory = () => {
+    setCurrentStoryIndex((prev) => {
+      if (prev >= dummyStories.length - 1) return 0;
+      return prev + 1;
+    });
+  };
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      handleNextStory();
+    }, 2000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <ProtectedRoute type="PROTECTED">
-      <div className="flex h-4/5 px-[14vw] py-[7vh]">
-        {/* LEFT */}
-        <div className="h-[85vh] w-[50%] items-center bg-[#1e262c] px-5 lg:w-[30%] ">
-          <div className="h-[13%] pt-5">
-            <StatusUserCard />
-          </div>
-          <hr />
-          <div className="h-[85%] overflow-y-scroll pt-2">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(
-              (_, idx) => (
-                <Link href={`/status/drotz`}>
-                  {/* TODO */}
-                  <StatusUserCard />
-                </Link>
-              ),
-            )}
+    <div>
+      <div className="flex h-[100vh] items-center justify-center bg-slate-900">
+        <div className="relative w-[620px]">
+          <img
+            src={dummyStories[currentStoryIndex]}
+            alt="cool story bro"
+            className="my-auto h-[96vh] w-[620px]"
+          />
+          <div className="absolute top-0 flex w-full">
+            {dummyStories.map((item, idx) => (
+              <ProgressBar
+                key={idx}
+                index={idx}
+                activeIndex={currentStoryIndex}
+              />
+            ))}
           </div>
         </div>
-        {/* RIGHT */}
-        <div className="relative h-[85vh] w-1/2 bg-[#0b141a] py-20 lg:w-[70%]">
-          <Link href="/" className="">
-            <AiOutlineClose className="absolute right-10 top-5 text-xl text-white" />
-          </Link>
-        </div>
+        <Link href="/">
+          <BsArrowLeft className="absolute left-10 top-5 text-2xl text-white" />
+        </Link>
+        <Link href="/">
+          <AiOutlineClose className="absolute right-10 top-5 text-2xl text-white" />
+        </Link>
       </div>
-    </ProtectedRoute>
+    </div>
   );
 };
 
-export default Status;
+export default StatusViewer;
